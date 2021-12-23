@@ -6,7 +6,7 @@ interface startingMsg {
   msg: string;
 }
 
-app.get("*", (req: Request, res: Response) => {
+app.get("*", (_req: Request, res: Response) => {
   const helloObj: startingMsg = {
     msg: "Hello world",
   };
