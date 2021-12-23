@@ -1,9 +1,16 @@
-import express from "express";
+import express, { Request, Response } from "express";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
+interface startingMsg {
+  msg: string;
+}
+
+app.get("*", (req: Request, res: Response) => {
+  const helloObj: startingMsg = {
+    msg: "Hello world",
+  };
+  res.status(200).json(helloObj);
 });
 
 export default app;
