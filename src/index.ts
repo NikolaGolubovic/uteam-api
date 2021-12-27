@@ -1,11 +1,10 @@
 import app from "./app";
+import { database } from "./utils/database";
 
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is up http://localhost:${PORT}/`);
-});
+(async () => {
+  await database.sequelize.sync({ alter: true }).then(() => {
+    app.listen(5000, () => {
+      console.log(`Server is running on port:5000`);
+    });
+  });
+})();
