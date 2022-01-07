@@ -3,8 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
-import usersRouter from "./services/userService";
-import loginRouter from "./services/loginService";
+import authRoutes from "./routes/authRoutes";
 import middleware from "./utils/middleware";
 import User from "./models/users";
 User.sync();
@@ -18,8 +17,7 @@ interface startingMsg {
   msg: string;
 }
 
-app.use("/api/register", usersRouter);
-app.use("/api/login", loginRouter);
+app.use("/", authRoutes);
 
 app.get("*", (_req: Request, res: Response) => {
   const helloObj: startingMsg = {

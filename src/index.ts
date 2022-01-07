@@ -9,4 +9,4 @@ sequelize
     console.log("SERVER IS UP");
     app.listen(PORT);
   })
-  .catch((err) => console.log(err));
+  .catch((err: Error) => console.log(err));
