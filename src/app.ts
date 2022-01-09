@@ -4,9 +4,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import authRoutes from "./routes/authRoutes";
-import middleware from "./utils/middleware";
+import profileRoutes from "./routes/profileRoutes";
+
 import User from "./models/users";
+import Profile from "./models/profiles";
 User.sync();
+Profile.sync();
+
+import middleware from "./utils/middleware";
+
 const app = express();
 
 app.use(cors());
@@ -17,6 +23,7 @@ interface startingMsg {
   msg: string;
 }
 
+app.use("/profiles", profileRoutes);
 app.use("/", authRoutes);
 
 app.get("*", (_req: Request, res: Response) => {
@@ -27,5 +34,8 @@ app.get("*", (_req: Request, res: Response) => {
 });
 
 app.use(middleware.errorHandler);
+
+Profile.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Profile, { foreignKey: "userId" });
 
 export default app;

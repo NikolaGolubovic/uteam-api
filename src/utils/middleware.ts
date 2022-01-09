@@ -8,6 +8,10 @@ const errorHandler: ErrorRequestHandler = (errors, _req, res, next) => {
   }
   if (errors.name === "ValidationError") {
     res.status(404).json({ msg: "Something went wrong with Credentials" });
+  } else if (errors.name === "JsonWebTokenError") {
+    return res.status(401).json({
+      error: "invalid token",
+    });
   }
 
   return res.status(400).json({ message: errors.message });

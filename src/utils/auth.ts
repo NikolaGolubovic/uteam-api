@@ -11,4 +11,4 @@ const auth = (req: any, _res: Response, next: NextFunction) => {
   return next();
 };
 
-module.exports = auth;
+export default auth;
