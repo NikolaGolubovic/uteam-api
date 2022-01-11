@@ -1,24 +1,29 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../utils/database";
 
-const User: any = sequelize.define("User", {
-  userId: {
+const Profile: any = sequelize.define("Profile", {
+  profileId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true, // Automatically gets converted to SERIAL for postgres
+    autoIncrement: true,
     allowNull: false,
   },
-  username: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
+  status: {
+    type: DataTypes.ENUM("pending", "published"),
+    defaultValue: "pending",
+  },
+  profilePhoto: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  password: {
-    type: DataTypes.STRING,
+  userId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
-export default User;
+
+export default Profile;
