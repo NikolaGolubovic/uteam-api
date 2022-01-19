@@ -1,17 +1,17 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
 
-class Profile extends Model {
-  public profileId!: number;
+class Company extends Model {
   public name!: string;
-  public status!: "pending" | "published";
-  public profilePhoto!: "string";
-  public userId!: number;
+  public logo!: string;
+  public slug!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
-Profile.init(
+Company.init(
   {
-    profileId: {
+    companyId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -21,27 +21,27 @@ Profile.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    status: {
-      type: DataTypes.ENUM("pending", "published"),
-      defaultValue: "pending",
-    },
-    profilePhoto: {
+    logo: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId: {
-      type: DataTypes.INTEGER,
+    slug: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    companyId: {
-      type: DataTypes.INTEGER,
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },
   {
-    tableName: "profiles",
+    tableName: "companies",
     sequelize,
   }
 );
 
-export default Profile;
+export default Company;

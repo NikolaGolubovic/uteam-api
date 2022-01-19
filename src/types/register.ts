@@ -5,8 +5,9 @@ export interface registerValues {
 }
 
 import { validateEmail, validateUsername } from "../utils/helpers";
+import { Request } from "express";
 
-export function parseParams(req): registerValues {
+export function parseRegisterBody(req: Request): registerValues {
   const { username, password, email } = req.body;
   if (
     !username ||

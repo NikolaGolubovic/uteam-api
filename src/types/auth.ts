@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 export interface IGetUserAuthInfoRequest extends Request {
-  token: string; // or any other type
+  token: string;
 }
 
 export interface MyToken {
