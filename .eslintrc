@@ -16,5 +16,8 @@
       }
     ],
     "@typescript-eslint/no-namespace": "off"
+  },
+  "env": {
+    "jest": true
   }
 }

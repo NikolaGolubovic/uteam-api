@@ -39,7 +39,7 @@ app.get("*", (_req: Request, res: Response) => {
 app.use(middleware.errorHandler);
 
 Profile.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(Profile, { foreignKey: "userId" });
+User.hasMany(Profile);
 Profile.belongsTo(Company, { foreignKey: "companyId" });
-Company.hasMany(Profile, { foreignKey: "companyId" });
+Company.hasMany(Profile);
 export default app;
