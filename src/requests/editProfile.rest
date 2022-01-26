@@ -1,0 +1,9 @@
+POST http://localhost:5000/profiles
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvZSIsImlhdCI6MTY0MzIwMjE1MH0.-FV8u-EYEJzrwhn4vC6b9kCszDY216KS1lncOCfb5PY
+Content-Type: application/json
+
+{
+    "name": "Joe Profile Updated", 
+    "profilePhoto": "photo2.jpg",
+    "companyId": 1
+}

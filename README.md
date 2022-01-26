@@ -4,5 +4,12 @@ Simple Hello world App
 
 ## Controlls
 
-yarn start, yarn dev - starting app in dev mode
-yarn build - compile ts app to js
+npm build - compile ts files to js
+dev or start - run ts files in dev mode
+
+## Requests
+
+in src/requests,
+there are requests for various routes
+
+to create token use login route

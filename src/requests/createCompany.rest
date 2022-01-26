@@ -1,0 +1,7 @@
+PUT http://localhost:5000/companies/1
+Content-Type: application/json
+
+{
+    "name": "Joe Company Updated", 
+    "logo": "JoeLogo.jpg"
+}

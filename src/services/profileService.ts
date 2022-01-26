@@ -2,8 +2,8 @@ import { RequestHandler } from "express";
 import Profile from "../models/profiles";
 import User from "../models/users";
 import jwt from "jsonwebtoken";
-import { MyToken, IGetUserAuthInfoRequest } from "../@types/auth.t";
-import { ProfileBody } from "../@types/profile.t";
+import { MyToken } from "../types/auth";
+import { ProfileBody } from "../types/profile";
 
 export const getProfiles: RequestHandler = async (_req, res, next) => {
   try {
@@ -14,13 +14,11 @@ export const getProfiles: RequestHandler = async (_req, res, next) => {
   }
 };
 
-export const createProfile: RequestHandler = async (
-  req: IGetUserAuthInfoRequest,
-  res,
-  next
-) => {
+export const createProfile: RequestHandler = async (req, res, next) => {
   try {
     const { name, profilePhoto, status } = req.body as ProfileBody;
+    const { companyId } = req.body;
+    console.log("companyId", req.body);
     const decodedToken = jwt.verify(req.token, process.env.SECRET) as MyToken;
     if (!decodedToken.username) {
       return res.status(401).json({
@@ -40,6 +38,7 @@ export const createProfile: RequestHandler = async (
       profilePhoto,
       userId: foundUser.userId,
       status,
+      companyId,
     });
     res.status(201).json({ newProfile });
   } catch (error) {
@@ -47,11 +46,7 @@ export const createProfile: RequestHandler = async (
   }
 };
 
-export const getSingleProfile: RequestHandler = async (
-  req: IGetUserAuthInfoRequest,
-  res,
-  next
-) => {
+export const getSingleProfile: RequestHandler = async (req, res, next) => {
   try {
     const foundProfile = await Profile.findOne({
       where: { profileId: +req.params.id },
@@ -67,13 +62,10 @@ export const getSingleProfile: RequestHandler = async (
   }
 };
 
-export const editProfile: RequestHandler = async (
-  req: IGetUserAuthInfoRequest,
-  res,
-  next
-) => {
+export const editProfile: RequestHandler = async (req, res, next) => {
   try {
     const { name, profilePhoto, status } = req.body as ProfileBody;
+    const { companyId } = req.body.companyId;
     const profileId = req.params.id;
     if (!name || !profilePhoto) {
       return res.status(401).json({
@@ -104,6 +96,7 @@ export const editProfile: RequestHandler = async (
       name,
       profilePhoto,
       status,
+      companyId,
     });
     await foundProfile.save();
     res.status(200).json({ msg: "Resource updated successfully" });
@@ -112,14 +105,13 @@ export const editProfile: RequestHandler = async (
   }
 };
 
-export const deleteProfile: RequestHandler = async (
-  req: IGetUserAuthInfoRequest,
-  res,
-  next
-) => {
+export const deleteProfile: RequestHandler = async (req, res, next) => {
   try {
     const profileId = req.params.id;
-    const decodedToken = jwt.verify(req.token, process.env.SECRET) as MyToken;
+    const decodedToken = jwt.verify(
+      req.token,
+      process.env.SECRET as string
+    ) as MyToken;
     if (!decodedToken.username) {
       return res.status(401).json({
         error: "token missing or invalid",

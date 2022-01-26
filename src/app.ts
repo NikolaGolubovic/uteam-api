@@ -5,11 +5,13 @@ dotenv.config();
 
 import authRoutes from "./routes/authRoutes";
 import profileRoutes from "./routes/profileRoutes";
-
+import companyRoutes from "./routes/companyRoutes";
 import User from "./models/users";
 import Profile from "./models/profiles";
+import Company from "./models/companies";
 User.sync();
 Profile.sync();
+Company.sync();
 
 import middleware from "./utils/middleware";
 
@@ -24,7 +26,8 @@ interface startingMsg {
 }
 
 app.use("/profiles", profileRoutes);
-app.use("/", authRoutes);
+app.use("/companies", companyRoutes);
+app.use(authRoutes);
 
 app.get("*", (_req: Request, res: Response) => {
   const helloObj: startingMsg = {
@@ -36,6 +39,7 @@ app.get("*", (_req: Request, res: Response) => {
 app.use(middleware.errorHandler);
 
 Profile.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(Profile, { foreignKey: "userId" });
-
+User.hasMany(Profile);
+Profile.belongsTo(Company, { foreignKey: "companyId" });
+Company.hasMany(Profile);
 export default app;

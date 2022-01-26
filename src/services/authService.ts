@@ -2,11 +2,11 @@ import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../models/users";
-import { parseParams } from "../@types/register.t";
+import { parseRegisterBody } from "../types/register";
 
 export const registerUser: RequestHandler = async (req, res, next) => {
   try {
-    const { username, password: rowPass, email } = parseParams(req);
+    const { username, password: rowPass, email } = parseRegisterBody(req);
     const foundUser = await User.findOne({
       where: { username: username },
     });
@@ -62,7 +62,7 @@ export const loginUser: RequestHandler = async (req, res, next) => {
       username: foundUser["username"],
       id: foundUser["id"],
     };
-    const token = jwt.sign(userForToken, process.env.SECRET);
+    const token = jwt.sign(userForToken, process.env.SECRET as string);
     res.status(200).send({ message: "OK", token });
   } catch (error) {
     next(error);

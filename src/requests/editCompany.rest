@@ -1,0 +1,6 @@
+PUT http://localhost:5000/companies/1
+
+{
+    "name": "Joe Company Updated", 
+    "logo": "JoeLogo.jpg"
+}

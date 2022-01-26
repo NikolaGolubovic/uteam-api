@@ -1,6 +1,6 @@
-import { Response, NextFunction } from "express";
+import { RequestHandler } from "express";
 
-const auth = (req: any, _res: Response, next: NextFunction) => {
+const auth: RequestHandler = (req, _res, next) => {
   const authorization = req.get("authorization");
   if (!authorization) {
     throw new Error("There is some problem with token");
