@@ -52,7 +52,7 @@ export const passportInit: RequestHandler = (_req, _res, next) => {
     done(null, user);
   });
 
-  passport.deserializeUser(function (user: any, done) {
+  passport.deserializeUser(function (user: User, done) {
     done(null, user);
   });
   next();

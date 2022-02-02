@@ -1,8 +1,8 @@
 PUT http://localhost:5000/profiles/3
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbiIsImlhdCI6MTY0MzgwMDY2NX0.WjCnB2Tl_5xZ98t_U1z6LQlI7EPftpSK14k2Z8ie-UI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvZSIsImlhdCI6MTY0MzgxODkxM30.WFZstYfzlNMblrZg5fS9v-fXlLtPOXwD6qZQjOVrXBY
 Content-Type: application/json
 
 {
-    "name": "Joe Profile Updated", 
+    "name": "Joe Profile Updated SECOND TIME", 
     "profilePhoto": "photo2.jpg"
 }
