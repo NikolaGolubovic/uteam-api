@@ -37,6 +37,10 @@ Company.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     tableName: "companies",

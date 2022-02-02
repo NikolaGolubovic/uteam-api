@@ -4,5 +4,5 @@ Content-Type: application/json
 // username ili email
 {
     "username": "joe", 
-    "password": "misterija"
+    "password": "password"
 }

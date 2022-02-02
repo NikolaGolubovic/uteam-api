@@ -1,5 +1,5 @@
 POST http://localhost:5000/profiles
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvZSIsImlhdCI6MTY0MzIwMjE1MH0.-FV8u-EYEJzrwhn4vC6b9kCszDY216KS1lncOCfb5PY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvZSIsImlhdCI6MTY0Mzc5ODMwNX0.5u5y5AK0UMrTgwve4VpuGDzIrjXoGAlG2AuEzbyQ_L4
 Content-Type: application/json
 
 {

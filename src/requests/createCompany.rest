@@ -1,7 +1,8 @@
-PUT http://localhost:5000/companies/1
+POST http://localhost:5000/companies
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvZSIsImlhdCI6MTY0Mzc5Njg5OX0.kIlGogp2ehhPGjBP3HRhpP-qDnu7uN0AsC4aedZyhyY
 Content-Type: application/json
 
 {
-    "name": "Joe Company Updated", 
+    "name": "Joe Company", 
     "logo": "JoeLogo.jpg"
 }
