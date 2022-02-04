@@ -5,24 +5,37 @@ import {
   Strategy as JWTStrategy,
 } from "passport-jwt";
 import User from "../models/users";
+import bcrypt from "bcrypt";
 import { RequestHandler } from "express";
+import { Op } from "sequelize";
 
-export const passportInit: RequestHandler = (_req, _res, next) => {
+export const passportInit: RequestHandler = (req, res, next) => {
   passport.use(
     new LocalStrategy(
       { usernameField: "username" },
-      async (username, _password, done) => {
+      async (username = "default", password, done) => {
+        const email = (req.body.email as string) || "default";
         const user = await User.findOne({
-          where: { username: username.toLowerCase() },
+          where: {
+            [Op.or]: [{ username: username }, { email: email }],
+          },
         });
         if (!user) {
           return done(undefined, false, {
-            message: `Username ${username} not found.`,
+            message: `Person with that credentials is not found.`,
           });
         }
-        if (user) {
-          done(undefined, user);
-        }
+        bcrypt.compare(password, user.password, (err, data) => {
+          if (err) {
+            return done(err);
+          }
+          if (data) {
+            done(undefined, user);
+          }
+          if (!data) {
+            res.json({ success: false, message: "passwords do not match" });
+          }
+        });
       }
     )
   );

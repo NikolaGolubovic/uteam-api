@@ -3,10 +3,20 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../models/users";
 import { parseRegisterBody } from "../types/register";
+import slugify from "slugify";
+import Company from "../models/companies";
+import Profile from "../models/profiles";
 
 export const registerUser: RequestHandler = async (req, res, next) => {
   try {
     const { username, password: rowPass, email } = parseRegisterBody(req);
+    const {
+      companyName,
+      companyLogo,
+      profileName,
+      profilePhoto,
+      profileStatus,
+    } = req.body;
     const foundUser = await User.findOne({
       where: { username: username },
     });
@@ -21,12 +31,57 @@ export const registerUser: RequestHandler = async (req, res, next) => {
     }
     const saltRound = 10;
     const password = await bcrypt.hash(rowPass, saltRound);
-    const newUser = await User.create({
+    await User.create({
       username,
       password,
       email,
     });
-    res.status(200).json({ user: newUser });
+    const newUserFound = await User.findOne({ where: { username: username } });
+    if (newUserFound === null) {
+      await newUserFound.destroy();
+      throw new Error("Something went wrong with new user creation");
+    }
+    await Company.create({
+      name: companyName || `${username}'s Country`,
+      logo: companyLogo || `${username}-logo.jpg`,
+      slug: companyName
+        ? slugify(companyName, { lower: true })
+        : `${slugify(username.toLowerCase())}-country-company`,
+      updatedAt: new Date(),
+      userId: newUserFound.userId,
+    });
+    const newCompanyFound = await Company.findOne({
+      where: { userId: newUserFound.userId },
+    });
+    if (newCompanyFound === null) {
+      await newUserFound.destroy();
+      await newCompanyFound.destroy();
+      throw new Error("Something went wrong with new company creation");
+    }
+    await Profile.create({
+      name: profileName,
+      profilePhoto,
+      userId: newUserFound.userId,
+      status: profileStatus,
+      companyId: newCompanyFound.companyId,
+    });
+    const newProfileFound = await Profile.findOne({
+      where: {
+        userId: newUserFound.userId,
+        companyId: newCompanyFound.companyId,
+      },
+    });
+    if (newProfileFound === null) {
+      await newProfileFound.destroy();
+      await newUserFound.destroy();
+      await newCompanyFound.destroy();
+      throw new Error("Something went wrong with new profile creation");
+    }
+    res.status(200).json({
+      user: newUserFound,
+      company: newCompanyFound,
+      profile: newProfileFound,
+    });
   } catch (error) {
     next(error);
   }
@@ -34,7 +89,7 @@ export const registerUser: RequestHandler = async (req, res, next) => {
 
 export const loginUser: RequestHandler = async (req, res, next) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, email } = req.body;
     if (!username && !email) {
       throw new Error("Plase provide username or email");
     }
@@ -51,12 +106,6 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     }
     if (foundUser === null) {
       throw new Error("User with provided username or email doesn't exist");
-    }
-    const checkPass = await bcrypt.compare(password, foundUser["password"]);
-    if (!checkPass) {
-      throw new Error(
-        "Can't found USER with provided username or password, please check your inputs."
-      );
     }
     const userForToken = {
       username: foundUser["username"],

@@ -3,7 +3,7 @@ import Profile from "../models/profiles";
 import Company from "../models/companies";
 import { RequestHandler } from "express";
 
-export const baseInit: RequestHandler = (req, res, next) => {
+export const baseSync: RequestHandler = (req, res, next) => {
   User.sync();
   Company.sync();
   Profile.sync();
