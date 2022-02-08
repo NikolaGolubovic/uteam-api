@@ -17,6 +17,9 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       profilePhoto,
       profileStatus,
     } = req.body;
+    console.log(
+      "==================!!!!!!!!!!!!!!!!!!!!=============222222222222"
+    );
     const foundUser = await User.findOne({
       where: { username: username },
     });
@@ -41,6 +44,7 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       await newUserFound.destroy();
       throw new Error("Something went wrong with new user creation");
     }
+
     await Company.create({
       name: companyName || `${username}'s Country`,
       logo: companyLogo || `${username}-logo.jpg`,
@@ -48,11 +52,13 @@ export const registerUser: RequestHandler = async (req, res, next) => {
         ? slugify(companyName, { lower: true })
         : `${slugify(username.toLowerCase())}-country-company`,
       updatedAt: new Date(),
-      userId: newUserFound.userId,
+      userId: +newUserFound.userId,
     });
+    console.log("newFoundUserID", newUserFound.userId);
     const newCompanyFound = await Company.findOne({
       where: { userId: newUserFound.userId },
     });
+    console.log("newCompanyFound", newCompanyFound);
     if (newCompanyFound === null) {
       await newUserFound.destroy();
       await newCompanyFound.destroy();
@@ -63,7 +69,7 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       profilePhoto,
       userId: newUserFound.userId,
       status: profileStatus,
-      companyId: newCompanyFound.companyId,
+      companyId: +newCompanyFound.companyId,
     });
     const newProfileFound = await Profile.findOne({
       where: {

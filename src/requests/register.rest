@@ -2,11 +2,11 @@ POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-    "username": "joe",
+    "username": "joe2",
     "password": "password",
-    "email": "joe@gmail.com",
-    "companyName": "",
-    "companyLogo": "",
+    "email": "joe2@gmail.com",
+    "companyName": "joeCompany",
+    "companyLogo": "joe.jpg",
     "profileName": "Joe Profile",
     "profilePhoto": "joeprofile.jpg",
     "profileStatus": "pending"

@@ -2,11 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
 
 class Profile extends Model {
-  public profileId!: number;
-  public name!: string;
-  public status!: "pending" | "published";
-  public profilePhoto!: "string";
-  public userId!: number;
+  declare profileId: number;
+  declare name: string;
+  declare status: "pending" | "published";
+  declare profilePhoto: "string";
 }
 
 Profile.init(
@@ -39,9 +38,11 @@ Profile.init(
     },
   },
   {
-    tableName: "profiles",
+    modelName: "Profile",
     sequelize,
   }
 );
+
+console.log(Profile === sequelize.models.Profile);
 
 export default Profile;

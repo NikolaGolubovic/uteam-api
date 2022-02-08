@@ -2,11 +2,11 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
 
 class Company extends Model {
-  public name!: string;
-  public logo!: string;
-  public slug!: string;
-  public createdAt!: Date;
-  public updatedAt!: Date;
+  declare name: string;
+  declare logo: string;
+  declare slug: string;
+  declare createdAt: Date;
+  declare updatedAt: Date;
 }
 
 Company.init(
@@ -43,7 +43,7 @@ Company.init(
     },
   },
   {
-    tableName: "companies",
+    modelName: "Company",
     sequelize,
   }
 );

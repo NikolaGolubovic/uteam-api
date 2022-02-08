@@ -2,11 +2,11 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
 
 class User extends Model {
-  public userId!: number;
-  public username!: string;
-  public email!: string;
-  public password!: string;
-  public role!: "company-user" | "company-admin" | "superadmin";
+  declare userId: number;
+  declare username: string;
+  declare email: string;
+  declare password: string;
+  declare role: "company-user" | "company-admin" | "superadmin";
 }
 
 User.init(
@@ -35,8 +35,9 @@ User.init(
     },
   },
   {
-    tableName: "users",
+    modelName: "User",
     sequelize,
   }
 );
+
 export default User;
