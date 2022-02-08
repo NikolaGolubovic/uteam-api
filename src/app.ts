@@ -8,15 +8,6 @@ import companyRoutes from "./routes/companyRoutes";
 import middleware from "./utils/middleware";
 import { passportInit } from "./utils/passport";
 import { baseSync } from "./utils/baseSync";
-// import User from "./models/users";
-// import Profile from "./models/profiles";
-// import Company from "./models/companies";
-// Profile.belongsTo(User, { foreignKey: "userId" });
-// User.hasMany(Profile);
-// Company.belongsTo(User, { foreignKey: "userId" });
-// User.hasMany(Company);
-// Profile.belongsTo(Company, { foreignKey: "companyId" });
-// Company.hasMany(Profile);
 
 const app = express();
 

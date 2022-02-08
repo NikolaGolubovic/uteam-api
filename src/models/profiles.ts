@@ -28,21 +28,11 @@ Profile.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    companyId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   },
   {
     modelName: "Profile",
     sequelize,
   }
 );
-
-console.log(Profile === sequelize.models.Profile);
 
 export default Profile;
