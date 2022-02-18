@@ -1,4 +1,5 @@
 import { DataTypes, Model } from "sequelize";
+import { Role } from "../types/models";
 import sequelize from "../utils/database";
 
 class User extends Model {
@@ -6,7 +7,7 @@ class User extends Model {
   declare username: string;
   declare email: string;
   declare password: string;
-  declare role: "company-user" | "company-admin" | "superadmin";
+  declare role: Role;
 }
 
 User.init(

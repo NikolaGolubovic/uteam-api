@@ -17,9 +17,6 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       profilePhoto,
       profileStatus,
     } = req.body;
-    console.log(
-      "==================!!!!!!!!!!!!!!!!!!!!=============222222222222"
-    );
     const foundUser = await User.findOne({
       where: { username: username },
     });
@@ -41,27 +38,25 @@ export const registerUser: RequestHandler = async (req, res, next) => {
     });
     const newUserFound = await User.findOne({ where: { username: username } });
     if (newUserFound === null) {
-      await newUserFound.destroy();
       throw new Error("Something went wrong with new user creation");
     }
 
     await Company.create({
-      name: companyName || `${username}'s Country`,
+      name: companyName || `${username}'s Company`,
       logo: companyLogo || `${username}-logo.jpg`,
       slug: companyName
         ? slugify(companyName, { lower: true })
-        : `${slugify(username.toLowerCase())}-country-company`,
+        : `${slugify(username.toLowerCase())}-company`,
       updatedAt: new Date(),
-      userId: +newUserFound.userId,
+      userId: newUserFound.userId,
     });
-    console.log("newFoundUserID", newUserFound.userId);
+
     const newCompanyFound = await Company.findOne({
       where: { userId: newUserFound.userId },
     });
-    console.log("newCompanyFound", newCompanyFound);
+
     if (newCompanyFound === null) {
       await newUserFound.destroy();
-      await newCompanyFound.destroy();
       throw new Error("Something went wrong with new company creation");
     }
     await Profile.create({
@@ -69,7 +64,7 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       profilePhoto,
       userId: newUserFound.userId,
       status: profileStatus,
-      companyId: +newCompanyFound.companyId,
+      companyId: newCompanyFound.companyId,
     });
     const newProfileFound = await Profile.findOne({
       where: {
@@ -78,7 +73,6 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       },
     });
     if (newProfileFound === null) {
-      await newProfileFound.destroy();
       await newUserFound.destroy();
       await newCompanyFound.destroy();
       throw new Error("Something went wrong with new profile creation");

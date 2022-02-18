@@ -6,7 +6,7 @@ import sequelize from "./utils/database";
 const PORT = process.env.PORT || 5000;
 
 sequelize
-  .sync({ force: false })
+  .sync()
   .then(() => {
     console.log("SERVER IS UP");
     app.listen(PORT);
