@@ -11,7 +11,7 @@ class Company extends Model {
 
 Company.init(
   {
-    companyId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -39,8 +39,9 @@ Company.init(
     },
   },
   {
-    modelName: "Company",
+    modelName: "company",
     sequelize,
+    underscored: true,
   }
 );
 

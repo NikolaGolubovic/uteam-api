@@ -10,7 +10,7 @@ class Profile extends Model {
 
 Profile.init(
   {
-    profileId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -28,10 +28,17 @@ Profile.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+    },
+    companyId: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
-    modelName: "Profile",
     sequelize,
+    modelName: "profile",
+    underscored: true,
   }
 );
 

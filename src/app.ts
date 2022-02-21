@@ -7,14 +7,20 @@ import companyRoutes from "./routes/companyRoutes";
 
 import middleware from "./utils/middleware";
 import { passportInit } from "./utils/passport";
-import { baseSync } from "./utils/baseSync";
+import User from "./models/users";
+import Profile from "./models/profiles";
+import Company from "./models/companies";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("build"));
-baseSync();
+
+Company.belongsTo(User);
+User.hasMany(Company);
+User.belongsToMany(Company, { through: Profile });
+Company.belongsToMany(Profile, { through: Profile });
 
 app.use(passportInit);
 

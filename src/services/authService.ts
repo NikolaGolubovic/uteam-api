@@ -24,7 +24,7 @@ export const registerUser: RequestHandler = async (req, res, next) => {
       where: { email: email },
     });
     if (foundUser !== null) {
-      throw new Error("User with that USERNAME is already registred!");
+      throw new Error("User with that USERNAME has already registred!");
     }
     if (foundEmail !== null) {
       throw new Error("That Email is already used!");
@@ -48,11 +48,10 @@ export const registerUser: RequestHandler = async (req, res, next) => {
         ? slugify(companyName, { lower: true })
         : `${slugify(username.toLowerCase())}-company`,
       updatedAt: new Date(),
-      userId: newUserFound.userId,
+      userId: newUserFound.id,
     });
-
     const newCompanyFound = await Company.findOne({
-      where: { userId: newUserFound.userId },
+      where: { userId: newUserFound.id },
     });
 
     if (newCompanyFound === null) {
@@ -62,14 +61,14 @@ export const registerUser: RequestHandler = async (req, res, next) => {
     await Profile.create({
       name: profileName,
       profilePhoto,
-      userId: newUserFound.userId,
       status: profileStatus,
-      companyId: newCompanyFound.companyId,
+      userId: newUserFound.id,
+      companyId: newCompanyFound.id,
     });
     const newProfileFound = await Profile.findOne({
       where: {
-        userId: newUserFound.userId,
-        companyId: newCompanyFound.companyId,
+        userId: newUserFound.id,
+        companyId: newCompanyFound.id,
       },
     });
     if (newProfileFound === null) {

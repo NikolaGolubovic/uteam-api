@@ -12,7 +12,7 @@ class User extends Model {
 
 User.init(
   {
-    userId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -36,8 +36,9 @@ User.init(
     },
   },
   {
-    modelName: "User",
     sequelize,
+    modelName: "user",
+    underscored: true,
   }
 );
 
