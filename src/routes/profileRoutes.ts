@@ -7,7 +7,7 @@ import {
   getSingleProfile,
   deleteProfile,
 } from "../services/profileService";
-import auth from "../utils/auth";
+import auth from "../utils/authJwtPassport";
 
 const router = Router();
 

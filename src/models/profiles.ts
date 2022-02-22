@@ -2,16 +2,15 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
 
 class Profile extends Model {
-  public profileId!: number;
-  public name!: string;
-  public status!: "pending" | "published";
-  public profilePhoto!: "string";
-  public userId!: number;
+  declare profileId: number;
+  declare name: string;
+  declare status: "pending" | "published";
+  declare profilePhoto: "string";
 }
 
 Profile.init(
   {
-    profileId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -31,16 +30,15 @@ Profile.init(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     companyId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
   },
   {
-    tableName: "profiles",
     sequelize,
+    modelName: "profile",
+    underscored: true,
   }
 );
 

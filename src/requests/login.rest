@@ -3,6 +3,7 @@ Content-Type: application/json
 
 // username ili email
 {
-    "username": "joe", 
-    "password": "misterija"
+    "username": "joe",
+    "password": "password",
+    "email": "joe@gmail.com"
 }

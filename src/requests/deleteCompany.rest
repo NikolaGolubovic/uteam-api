@@ -1,1 +1,2 @@
 DELETE http://localhost:5000/companies/1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvbiIsImlhdCI6MTY0MzgwMDY2NX0.WjCnB2Tl_5xZ98t_U1z6LQlI7EPftpSK14k2Z8ie-UI

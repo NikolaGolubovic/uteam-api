@@ -1,17 +1,18 @@
 import { DataTypes, Model } from "sequelize";
+import { Role } from "../types/models";
 import sequelize from "../utils/database";
 
 class User extends Model {
-  public userId!: number;
-  public username!: string;
-  public email!: string;
-  public password!: string;
-  public role!: "company-user" | "company-admin" | "superadmin";
+  declare userId: number;
+  declare username: string;
+  declare email: string;
+  declare password: string;
+  declare role: Role;
 }
 
 User.init(
   {
-    userId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -35,8 +36,10 @@ User.init(
     },
   },
   {
-    tableName: "users",
     sequelize,
+    modelName: "user",
+    underscored: true,
   }
 );
+
 export default User;

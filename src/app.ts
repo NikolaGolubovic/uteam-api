@@ -1,25 +1,28 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
 
 import authRoutes from "./routes/authRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import companyRoutes from "./routes/companyRoutes";
+
+import middleware from "./utils/middleware";
+import { passportInit } from "./utils/passport";
 import User from "./models/users";
 import Profile from "./models/profiles";
 import Company from "./models/companies";
-User.sync();
-Profile.sync();
-Company.sync();
-
-import middleware from "./utils/middleware";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("build"));
+
+Company.belongsTo(User);
+User.hasMany(Company);
+User.belongsToMany(Company, { through: Profile });
+Company.belongsToMany(Profile, { through: Profile });
+
+app.use(passportInit);
 
 interface startingMsg {
   msg: string;
@@ -38,8 +41,4 @@ app.get("*", (_req: Request, res: Response) => {
 
 app.use(middleware.errorHandler);
 
-Profile.belongsTo(User, { foreignKey: "userId" });
-User.hasMany(Profile);
-Profile.belongsTo(Company, { foreignKey: "companyId" });
-Company.hasMany(Profile);
 export default app;

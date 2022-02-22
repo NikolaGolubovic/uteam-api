@@ -18,7 +18,6 @@ export const createProfile: RequestHandler = async (req, res, next) => {
   try {
     const { name, profilePhoto, status } = req.body as ProfileBody;
     const { companyId } = req.body;
-    console.log("companyId", req.body);
     const decodedToken = jwt.verify(req.token, process.env.SECRET) as MyToken;
     if (!decodedToken.username) {
       return res.status(401).json({
@@ -65,8 +64,7 @@ export const getSingleProfile: RequestHandler = async (req, res, next) => {
 export const editProfile: RequestHandler = async (req, res, next) => {
   try {
     const { name, profilePhoto, status } = req.body as ProfileBody;
-    const { companyId } = req.body.companyId;
-    const profileId = req.params.id;
+    const profileId = +req.params.id;
     if (!name || !profilePhoto) {
       return res.status(401).json({
         error: "Please Provide all values",
@@ -96,7 +94,6 @@ export const editProfile: RequestHandler = async (req, res, next) => {
       name,
       profilePhoto,
       status,
-      companyId,
     });
     await foundProfile.save();
     res.status(200).json({ msg: "Resource updated successfully" });
